@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunding.dao.UserDao">
+  <resultMap id="BaseResultMap" type="com.yunding.dao.entities.User">
+    <id column="userId" jdbcType="CHAR" property="userId" />
+    <result column="userEmail" jdbcType="CHAR" property="userEmail" />
+    <result column="userPassword" jdbcType="CHAR" property="userPassword" />
+    <result column="userPieces" jdbcType="INTEGER" property="userPieces" />
+    <result column="userSignature" jdbcType="CHAR" property="userSignature" />
+    <result column="userHeadShot" jdbcType="CHAR" property="userHeadShot" />
+    <result column="userPopularity" jdbcType="INTEGER" property="userPopularity" />
+    <result column="userName" jdbcType="CHAR" property="userName" />
+    <result column="userBirthday" jdbcType="CHAR" property="userBirthday" />
+    <result column="userSex" jdbcType="CHAR" property="userSex" />
+    <result column="userCareer" jdbcType="CHAR" property="userCareer" />
+    <result column="userPlace" jdbcType="CHAR" property="userPlace" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.yunding.dao.entities.UserExtend">
+    <result column="userFans" jdbcType="LONGVARCHAR" property="userFans" />
+    <result column="userConcern" jdbcType="LONGVARCHAR" property="userConcern" />
+    <result column="userFavorite" jdbcType="LONGVARCHAR" property="userFavorite" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    userId, userEmail, userPassword, userPieces, userSignature, userHeadShot, userPopularity, 
+    userName, userBirthday, userSex, userCareer, userPlace
+  </sql>
+  <sql id="Blob_Column_List">
+    userFans, userConcern, userFavorite
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from user
+    where userId = #{userId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from user
+    where userId = #{userId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" keyColumn="userId" keyProperty="userId" parameterType="com.yunding.dao.entities.UserExtend" useGeneratedKeys="true">
+    insert into user (userEmail, userPassword, userPieces, 
+      userSignature, userHeadShot, userPopularity, 
+      userName, userBirthday, userSex, 
+      userCareer, userPlace, userFans, 
+      userConcern, userFavorite)
+    values (#{userEmail,jdbcType=CHAR}, #{userPassword,jdbcType=CHAR}, #{userPieces,jdbcType=INTEGER}, 
+      #{userSignature,jdbcType=CHAR}, #{userHeadShot,jdbcType=CHAR}, #{userPopularity,jdbcType=INTEGER}, 
+      #{userName,jdbcType=CHAR}, #{userBirthday,jdbcType=CHAR}, #{userSex,jdbcType=CHAR}, 
+      #{userCareer,jdbcType=CHAR}, #{userPlace,jdbcType=CHAR}, #{userFans,jdbcType=LONGVARCHAR}, 
+      #{userConcern,jdbcType=LONGVARCHAR}, #{userFavorite,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="userId" keyProperty="userId" parameterType="com.yunding.dao.entities.UserExtend" useGeneratedKeys="true">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userEmail != null">
+        userEmail,
+      </if>
+      <if test="userPassword != null">
+        userPassword,
+      </if>
+      <if test="userPieces != null">
+        userPieces,
+      </if>
+      <if test="userSignature != null">
+        userSignature,
+      </if>
+      <if test="userHeadShot != null">
+        userHeadShot,
+      </if>
+      <if test="userPopularity != null">
+        userPopularity,
+      </if>
+      <if test="userName != null">
+        userName,
+      </if>
+      <if test="userBirthday != null">
+        userBirthday,
+      </if>
+      <if test="userSex != null">
+        userSex,
+      </if>
+      <if test="userCareer != null">
+        userCareer,
+      </if>
+      <if test="userPlace != null">
+        userPlace,
+      </if>
+      <if test="userFans != null">
+        userFans,
+      </if>
+      <if test="userConcern != null">
+        userConcern,
+      </if>
+      <if test="userFavorite != null">
+        userFavorite,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userEmail != null">
+        #{userEmail,jdbcType=CHAR},
+      </if>
+      <if test="userPassword != null">
+        #{userPassword,jdbcType=CHAR},
+      </if>
+      <if test="userPieces != null">
+        #{userPieces,jdbcType=INTEGER},
+      </if>
+      <if test="userSignature != null">
+        #{userSignature,jdbcType=CHAR},
+      </if>
+      <if test="userHeadShot != null">
+        #{userHeadShot,jdbcType=CHAR},
+      </if>
+      <if test="userPopularity != null">
+        #{userPopularity,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=CHAR},
+      </if>
+      <if test="userBirthday != null">
+        #{userBirthday,jdbcType=CHAR},
+      </if>
+      <if test="userSex != null">
+        #{userSex,jdbcType=CHAR},
+      </if>
+      <if test="userCareer != null">
+        #{userCareer,jdbcType=CHAR},
+      </if>
+      <if test="userPlace != null">
+        #{userPlace,jdbcType=CHAR},
+      </if>
+      <if test="userFans != null">
+        #{userFans,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="userConcern != null">
+        #{userConcern,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="userFavorite != null">
+        #{userFavorite,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yunding.dao.entities.UserExtend">
+    update user
+    <set>
+      <if test="userEmail != null">
+        userEmail = #{userEmail,jdbcType=CHAR},
+      </if>
+      <if test="userPassword != null">
+        userPassword = #{userPassword,jdbcType=CHAR},
+      </if>
+      <if test="userPieces != null">
+        userPieces = #{userPieces,jdbcType=INTEGER},
+      </if>
+      <if test="userSignature != null">
+        userSignature = #{userSignature,jdbcType=CHAR},
+      </if>
+      <if test="userHeadShot != null">
+        userHeadShot = #{userHeadShot,jdbcType=CHAR},
+      </if>
+      <if test="userPopularity != null">
+        userPopularity = #{userPopularity,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null">
+        userName = #{userName,jdbcType=CHAR},
+      </if>
+      <if test="userBirthday != null">
+        userBirthday = #{userBirthday,jdbcType=CHAR},
+      </if>
+      <if test="userSex != null">
+        userSex = #{userSex,jdbcType=CHAR},
+      </if>
+      <if test="userCareer != null">
+        userCareer = #{userCareer,jdbcType=CHAR},
+      </if>
+      <if test="userPlace != null">
+        userPlace = #{userPlace,jdbcType=CHAR},
+      </if>
+      <if test="userFans != null">
+        userFans = #{userFans,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="userConcern != null">
+        userConcern = #{userConcern,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="userFavorite != null">
+        userFavorite = #{userFavorite,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where userId = #{userId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.yunding.dao.entities.UserExtend">
+    update user
+    set userEmail = #{userEmail,jdbcType=CHAR},
+      userPassword = #{userPassword,jdbcType=CHAR},
+      userPieces = #{userPieces,jdbcType=INTEGER},
+      userSignature = #{userSignature,jdbcType=CHAR},
+      userHeadShot = #{userHeadShot,jdbcType=CHAR},
+      userPopularity = #{userPopularity,jdbcType=INTEGER},
+      userName = #{userName,jdbcType=CHAR},
+      userBirthday = #{userBirthday,jdbcType=CHAR},
+      userSex = #{userSex,jdbcType=CHAR},
+      userCareer = #{userCareer,jdbcType=CHAR},
+      userPlace = #{userPlace,jdbcType=CHAR},
+      userFans = #{userFans,jdbcType=LONGVARCHAR},
+      userConcern = #{userConcern,jdbcType=LONGVARCHAR},
+      userFavorite = #{userFavorite,jdbcType=LONGVARCHAR}
+    where userId = #{userId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yunding.dao.entities.User">
+    update user
+    set userEmail = #{userEmail,jdbcType=CHAR},
+      userPassword = #{userPassword,jdbcType=CHAR},
+      userPieces = #{userPieces,jdbcType=INTEGER},
+      userSignature = #{userSignature,jdbcType=CHAR},
+      userHeadShot = #{userHeadShot,jdbcType=CHAR},
+      userPopularity = #{userPopularity,jdbcType=INTEGER},
+      userName = #{userName,jdbcType=CHAR},
+      userBirthday = #{userBirthday,jdbcType=CHAR},
+      userSex = #{userSex,jdbcType=CHAR},
+      userCareer = #{userCareer,jdbcType=CHAR},
+      userPlace = #{userPlace,jdbcType=CHAR}
+    where userId = #{userId,jdbcType=CHAR}
+  </update>
+</mapper>

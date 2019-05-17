@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunding.dao.CommentDao">
+  <resultMap id="BaseResultMap" type="com.yunding.dao.entities.Comment">
+    <result column="articleId" jdbcType="CHAR" property="articleId" />
+    <result column="userId" jdbcType="CHAR" property="userId" />
+    <result column="commentTime" jdbcType="CHAR" property="commentTime" />
+    <result column="commentPraise" jdbcType="INTEGER" property="commentPraise" />
+    <result column="commentId" jdbcType="CHAR" property="commentId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.yunding.dao.entities.Comment">
+    <result column="commentContent" jdbcType="LONGVARCHAR" property="commentContent" />
+  </resultMap>
+  <sql id="Blob_Column_List">
+    commentContent
+  </sql>
+  <insert id="insert" parameterType="com.yunding.dao.entities.Comment">
+    insert into comment (articleId, userId, commentTime, 
+      commentPraise, commentId, commentContent
+      )
+    values (#{articleId,jdbcType=CHAR}, #{userId,jdbcType=CHAR}, #{commentTime,jdbcType=CHAR}, 
+      #{commentPraise,jdbcType=INTEGER}, #{commentId,jdbcType=CHAR}, #{commentContent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yunding.dao.entities.Comment">
+    insert into comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="articleId != null">
+        articleId,
+      </if>
+      <if test="userId != null">
+        userId,
+      </if>
+      <if test="commentTime != null">
+        commentTime,
+      </if>
+      <if test="commentPraise != null">
+        commentPraise,
+      </if>
+      <if test="commentId != null">
+        commentId,
+      </if>
+      <if test="commentContent != null">
+        commentContent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="articleId != null">
+        #{articleId,jdbcType=CHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=CHAR},
+      </if>
+      <if test="commentTime != null">
+        #{commentTime,jdbcType=CHAR},
+      </if>
+      <if test="commentPraise != null">
+        #{commentPraise,jdbcType=INTEGER},
+      </if>
+      <if test="commentId != null">
+        #{commentId,jdbcType=CHAR},
+      </if>
+      <if test="commentContent != null">
+        #{commentContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
