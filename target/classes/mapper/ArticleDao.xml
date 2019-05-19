@@ -26,7 +26,7 @@
     articleContent, articleTags
   </sql>
 
-<!--  通过主键(id)查询-->
+  <!--通过主键(id)查询-->
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
     select *
     from article
@@ -40,14 +40,10 @@
     order by articleTime desc
     limit #{page},#{pageSize}
   </select>
-
-  <!--通过主键删除-->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from article
     where articleId = #{articleId,jdbcType=CHAR}
   </delete>
-
-  <!--保存-->
   <insert id="insert" keyColumn="articleId" keyProperty="articleId" parameterType="com.yunding.dao.entities.ArticleExtend" useGeneratedKeys="true">
     insert into article (articleTime, articleType, articlePraiseNum, 
       articleCommentNum, articleForwardNum, articleTitle, 
@@ -58,8 +54,6 @@
       #{userId,jdbcType=CHAR}, #{userName,jdbcType=CHAR}, #{articleContent,jdbcType=LONGVARCHAR}, 
       #{articleTags,jdbcType=LONGVARCHAR})
   </insert>
-
-  <!--选择保存-->
   <insert id="insertSelective" keyColumn="articleId" keyProperty="articleId" parameterType="com.yunding.dao.entities.ArticleExtend" useGeneratedKeys="true">
     insert into article
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -127,8 +121,6 @@
       </if>
     </trim>
   </insert>
-
-  <!--选择性更新-->
   <update id="updateByPrimaryKeySelective" parameterType="com.yunding.dao.entities.ArticleExtend">
     update article
     <set>

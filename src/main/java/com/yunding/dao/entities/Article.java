@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * article
- * @author 
+ * @author guohaodong
  */
 public class Article implements Serializable {
     private String articleId;
