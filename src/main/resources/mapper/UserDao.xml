@@ -25,7 +25,7 @@
     userName, userBirthday, userSex, userCareer, userPlace
   </sql>
   <sql id="Blob_Column_List">
-    useFans, userConcern, userFavorite
+    userFans, userConcern, userFavorite
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
     select 
@@ -51,6 +51,7 @@
       #{userCareer,jdbcType=CHAR}, #{userPlace,jdbcType=CHAR}, #{userFans,jdbcType=LONGVARCHAR}, 
       #{userConcern,jdbcType=LONGVARCHAR}, #{userFavorite,jdbcType=LONGVARCHAR})
   </insert>
+
   <insert id="insertSelective" keyColumn="userId" keyProperty="userId" parameterType="com.yunding.dao.entities.UserExtend" useGeneratedKeys="true">
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -142,6 +143,8 @@
       </if>
     </trim>
   </insert>
+
+
   <update id="updateByPrimaryKeySelective" parameterType="com.yunding.dao.entities.UserExtend">
     update user
     <set>

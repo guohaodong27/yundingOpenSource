@@ -3,6 +3,7 @@ package com.yunding.config;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.yunding.dao.ArticleDao;
+import com.yunding.dao.UserDao;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +23,14 @@ public class ApplicationContextConfiguration {
     @Bean
     public ArticleDao articleDao(){
         return sqlSessionTemplate.getMapper(ArticleDao.class);
+    }
+
+    /**
+     * 用户数据接口
+     */
+    @Bean
+    public UserDao userDao(){
+        return sqlSessionTemplate.getMapper(UserDao.class);
     }
 
     /**

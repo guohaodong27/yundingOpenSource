@@ -41,6 +41,13 @@ public interface ArticleDao {
      */
     int updateByPrimaryKeySelective(ArticleExtend record);
 
+    /**
+     * 计数器更新
+     * @param type 被增加的属性
+     * @return
+     */
+    boolean updatePrimaryPraise(String type);
+
     int updateByPrimaryKeyWithBLOBs(ArticleExtend record);
 
     int updateByPrimaryKey(Article record);

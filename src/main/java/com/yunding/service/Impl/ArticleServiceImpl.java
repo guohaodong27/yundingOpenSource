@@ -1,12 +1,19 @@
 package com.yunding.service.Impl;
 
 
-import com.yunding.MyConst;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.google.gson.Gson;
+import com.yunding.dao.UserDao;
+import com.yunding.tools.ArrayToString;
+import com.yunding.tools.MyConst;
 import com.yunding.dao.ArticleDao;
 import com.yunding.dao.entities.ArticleExtend;
 import com.yunding.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 import java.util.List;
 
 @Service("ArticleService")
@@ -15,7 +22,10 @@ public class ArticleServiceImpl implements ArticleService {
     private final MyConst myConst = null;
     @Autowired
     private final ArticleDao articleDao = null;
-
+    @Autowired
+    private final UserDao userDao = null;
+    @Autowired
+    private final Gson gson = null;
     /**
      * 获取最近的10篇
      * @param page 页数
@@ -32,6 +42,7 @@ public class ArticleServiceImpl implements ArticleService {
      */
     public boolean saveArticle(ArticleExtend articleExtend) {
         //todo 事务处理
+
         articleDao.insert(articleExtend);
         return true;
     }
@@ -54,7 +65,7 @@ public class ArticleServiceImpl implements ArticleService {
      * @return 成功返回true 失败返回false
      */
     public boolean praise(String primaryKey) {
-        return false;
+            return articleDao.updatePrimaryPraise(primaryKey);
     }
 
     /**
@@ -75,7 +86,8 @@ public class ArticleServiceImpl implements ArticleService {
      * @param userId     评论者的id
      * @return 成功返回true 失败返回false
      */
-    public boolean comment(String primaryKey, String userId) {
+    public boolean comment(String primaryKey, String userId)
+    {
         return false;
     }
 
@@ -86,6 +98,11 @@ public class ArticleServiceImpl implements ArticleService {
      * @return 成功返回true 失败返回false
      */
     public boolean favorite(String primaryKey, String userId) {
+        String oldFavorite = userDao.selectByPrimaryKey(userId).getUserFavorite();
+        List<String> list = ArrayToString.toList(oldFavorite);
+        list.add(1,"sdfasf");
+
         return false;
+
     }
 }

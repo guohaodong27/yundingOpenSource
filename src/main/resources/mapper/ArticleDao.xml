@@ -1,63 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yunding.dao.ArticleDao">
-  <resultMap id="BaseResultMap" type="com.yunding.dao.entities.Article">
-    <id column="articleId" jdbcType="CHAR" property="articleId" />
-    <result column="articleTime" jdbcType="CHAR" property="articleTime" />
-    <result column="articleType" jdbcType="CHAR" property="articleType" />
-    <result column="articlePraiseNum" jdbcType="INTEGER" property="articlePraiseNum" />
-    <result column="articleCommentNum" jdbcType="INTEGER" property="articleCommentNum" />
-    <result column="articleForwardNum" jdbcType="INTEGER" property="articleForwardNum" />
-    <result column="articleTitle" jdbcType="CHAR" property="articleTitle" />
-    <result column="userId" jdbcType="CHAR" property="userId" />
-    <result column="userName" jdbcType="CHAR" property="userName" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.yunding.dao.entities.ArticleExtend">
-    <result column="articleContent" jdbcType="LONGVARCHAR" property="articleContent" />
-    <result column="articleTags" jdbcType="LONGVARCHAR" property="articleTags" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.yunding.dao.entities.Article">
+        <id column="articleId" jdbcType="CHAR" property="articleId"/>
+        <result column="articleTime" jdbcType="CHAR" property="articleTime"/>
+        <result column="articleType" jdbcType="CHAR" property="articleType"/>
+        <result column="articlePraiseNum" jdbcType="INTEGER" property="articlePraiseNum"/>
+        <result column="articleCommentNum" jdbcType="INTEGER" property="articleCommentNum"/>
+        <result column="articleForwardNum" jdbcType="INTEGER" property="articleForwardNum"/>
+        <result column="articleTitle" jdbcType="CHAR" property="articleTitle"/>
+        <result column="userId" jdbcType="CHAR" property="userId"/>
+        <result column="userName" jdbcType="CHAR" property="userName"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.yunding.dao.entities.ArticleExtend">
+        <result column="articleContent" jdbcType="LONGVARCHAR" property="articleContent"/>
+        <result column="articleTags" jdbcType="LONGVARCHAR" property="articleTags"/>
+    </resultMap>
 
-  <!--字段列表-->
-  <sql id="Base_Column_List">
-    articleId, articleTime, articleType, articlePraiseNum, articleCommentNum, articleForwardNum,
-    articleTitle, userId, userName
-  </sql>
-  <sql id="Blob_Column_List">
-    articleContent, articleTags
-  </sql>
+    <!--字段列表-->
+    <sql id="Base_Column_List">
+        articleId, articleTime, articleType, articlePraiseNum, articleCommentNum, articleForwardNum,
+        articleTitle, userId, userName
+    </sql>
+    <sql id="Blob_Column_List">
+        articleContent, articleTags
+    </sql>
 
-<!--  通过主键(id)查询-->
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
-    select *
-    from article
-    where articleId = #{articleId,jdbcType=CHAR}
-  </select>
+    <!--  通过主键(id)查询-->
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+        select *
+        from article
+        where articleId = #{articleId,jdbcType=CHAR}
+    </select>
 
-  <!--获取最近几条(按照时间排序)-->
-  <select id="selectOrderByTime" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
-    select *
-    from article
-    order by articleTime desc
-    limit #{page},#{pageSize}
-  </select>
+    <!--获取最近几条(按照时间排序)-->
+    <select id="selectOrderByTime" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs"> select * from article order by articleTime desc limit #{page},#{pageSize} </select>
+    <!--通过主键删除--> <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from article
+        where articleId = #{articleId,jdbcType=CHAR}
+    </delete>
 
-  <!--通过主键删除-->
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from article
-    where articleId = #{articleId,jdbcType=CHAR}
-  </delete>
-
-  <!--保存-->
-  <insert id="insert" keyColumn="articleId" keyProperty="articleId" parameterType="com.yunding.dao.entities.ArticleExtend" useGeneratedKeys="true">
-    insert into article (articleTime, articleType, articlePraiseNum, 
-      articleCommentNum, articleForwardNum, articleTitle, 
-      userId, userName, articleContent, 
-      articleTags)
-    values (#{articleTime,jdbcType=CHAR}, #{articleType,jdbcType=CHAR}, #{articlePraiseNum,jdbcType=INTEGER}, 
-      #{articleCommentNum,jdbcType=INTEGER}, #{articleForwardNum,jdbcType=INTEGER}, #{articleTitle,jdbcType=CHAR}, 
-      #{userId,jdbcType=CHAR}, #{userName,jdbcType=CHAR}, #{articleContent,jdbcType=LONGVARCHAR}, 
-      #{articleTags,jdbcType=LONGVARCHAR})
-  </insert>
+    <!--保存--><insert id="insert" keyColumn="articleId" keyProperty="articleId" parameterType="com.yunding.dao.entities.ArticleExtend" useGeneratedKeys="true">
+        insert into article (articleId,articleTime, articleType, articlePraiseNum,
+                             articleCommentNum, articleForwardNum, articleTitle,
+                             userId, userName, articleContent,
+                             articleTags)
+        values (#{articleId,jdbcType=CHAR},#{articleTime,jdbcType=CHAR}, #{articleType,jdbcType=CHAR}, #{articlePraiseNum,jdbcType=INTEGER},
+                #{articleCommentNum,jdbcType=INTEGER}, #{articleForwardNum,jdbcType=INTEGER},
+                #{articleTitle,jdbcType=CHAR},
+                #{userId,jdbcType=CHAR}, #{userName,jdbcType=CHAR}, #{articleContent,jdbcType=LONGVARCHAR},
+                #{articleTags,jdbcType=LONGVARCHAR})
+    </insert>
 
   <!--选择保存-->
   <insert id="insertSelective" keyColumn="articleId" keyProperty="articleId" parameterType="com.yunding.dao.entities.ArticleExtend" useGeneratedKeys="true">
@@ -128,67 +122,76 @@
     </trim>
   </insert>
 
-  <!--选择性更新-->
-  <update id="updateByPrimaryKeySelective" parameterType="com.yunding.dao.entities.ArticleExtend">
-    update article
-    <set>
-      <if test="articleTime != null">
-        articleTime = #{articleTime,jdbcType=CHAR},
-      </if>
-      <if test="articleType != null">
-        articleType = #{articleType,jdbcType=CHAR},
-      </if>
-      <if test="articlePraiseNum != null">
-        articlePraiseNum = #{articlePraiseNum,jdbcType=INTEGER},
-      </if>
-      <if test="articleCommentNum != null">
-        articleCommentNum = #{articleCommentNum,jdbcType=INTEGER},
-      </if>
-      <if test="articleForwardNum != null">
-        articleForwardNum = #{articleForwardNum,jdbcType=INTEGER},
-      </if>
-      <if test="articleTitle != null">
-        articleTitle = #{articleTitle,jdbcType=CHAR},
-      </if>
-      <if test="userId != null">
-        userId = #{userId,jdbcType=CHAR},
-      </if>
-      <if test="userName != null">
-        userName = #{userName,jdbcType=CHAR},
-      </if>
-      <if test="articleContent != null">
-        articleContent = #{articleContent,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="articleTags != null">
-        articleTags = #{articleTags,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where articleId = #{articleId,jdbcType=CHAR}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.yunding.dao.entities.ArticleExtend">
-    update article
-    set articleTime = #{articleTime,jdbcType=CHAR},
-      articleType = #{articleType,jdbcType=CHAR},
-      articlePraiseNum = #{articlePraiseNum,jdbcType=INTEGER},
-      articleCommentNum = #{articleCommentNum,jdbcType=INTEGER},
-      articleForwardNum = #{articleForwardNum,jdbcType=INTEGER},
-      articleTitle = #{articleTitle,jdbcType=CHAR},
-      userId = #{userId,jdbcType=CHAR},
-      userName = #{userName,jdbcType=CHAR},
-      articleContent = #{articleContent,jdbcType=LONGVARCHAR},
-      articleTags = #{articleTags,jdbcType=LONGVARCHAR}
-    where articleId = #{articleId,jdbcType=CHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.yunding.dao.entities.Article">
-    update article
-    set articleTime = #{articleTime,jdbcType=CHAR},
-      articleType = #{articleType,jdbcType=CHAR},
-      articlePraiseNum = #{articlePraiseNum,jdbcType=INTEGER},
-      articleCommentNum = #{articleCommentNum,jdbcType=INTEGER},
-      articleForwardNum = #{articleForwardNum,jdbcType=INTEGER},
-      articleTitle = #{articleTitle,jdbcType=CHAR},
-      userId = #{userId,jdbcType=CHAR},
-      userName = #{userName,jdbcType=CHAR}
-    where articleId = #{articleId,jdbcType=CHAR}
-  </update>
+    <!--选择性更新-->
+    <update id="updateByPrimaryKeySelective" parameterType="com.yunding.dao.entities.ArticleExtend">
+        update article
+        <set>
+            <if test="articleTime != null">
+                articleTime = #{articleTime,jdbcType=CHAR},
+            </if>
+            <if test="articleType != null">
+                articleType = #{articleType,jdbcType=CHAR},
+            </if>
+            <if test="articlePraiseNum != null">
+                articlePraiseNum = #{articlePraiseNum,jdbcType=INTEGER},
+            </if>
+            <if test="articleCommentNum != null">
+                articleCommentNum = #{articleCommentNum,jdbcType=INTEGER},
+            </if>
+            <if test="articleForwardNum != null">
+                articleForwardNum = #{articleForwardNum,jdbcType=INTEGER},
+            </if>
+            <if test="articleTitle != null">
+                articleTitle = #{articleTitle,jdbcType=CHAR},
+            </if>
+            <if test="userId != null">
+                userId = #{userId,jdbcType=CHAR},
+            </if>
+            <if test="userName != null">
+                userName = #{userName,jdbcType=CHAR},
+            </if>
+            <if test="articleContent != null">
+                articleContent = #{articleContent,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="articleTags != null">
+                articleTags = #{articleTags,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where articleId = #{articleId,jdbcType=CHAR}
+    </update>
+
+    <!--点赞-->
+    <update id="updatePrimaryPraise" parameterType="string"
+    >
+        update article
+        set articlePraiseNum=articlePraiseNum+1
+        where articleId=#{type}
+    </update>
+
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.yunding.dao.entities.ArticleExtend">
+        update article
+        set articleTime       = #{articleTime,jdbcType=CHAR},
+            articleType       = #{articleType,jdbcType=CHAR},
+            articlePraiseNum  = #{articlePraiseNum,jdbcType=INTEGER},
+            articleCommentNum = #{articleCommentNum,jdbcType=INTEGER},
+            articleForwardNum = #{articleForwardNum,jdbcType=INTEGER},
+            articleTitle      = #{articleTitle,jdbcType=CHAR},
+            userId            = #{userId,jdbcType=CHAR},
+            userName          = #{userName,jdbcType=CHAR},
+            articleContent    = #{articleContent,jdbcType=LONGVARCHAR},
+            articleTags       = #{articleTags,jdbcType=LONGVARCHAR}
+        where articleId = #{articleId,jdbcType=CHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yunding.dao.entities.Article">
+        update article
+        set articleTime       = #{articleTime,jdbcType=CHAR},
+            articleType       = #{articleType,jdbcType=CHAR},
+            articlePraiseNum  = #{articlePraiseNum,jdbcType=INTEGER},
+            articleCommentNum = #{articleCommentNum,jdbcType=INTEGER},
+            articleForwardNum = #{articleForwardNum,jdbcType=INTEGER},
+            articleTitle      = #{articleTitle,jdbcType=CHAR},
+            userId            = #{userId,jdbcType=CHAR},
+            userName          = #{userName,jdbcType=CHAR}
+        where articleId = #{articleId,jdbcType=CHAR}
+    </update>
 </mapper>
